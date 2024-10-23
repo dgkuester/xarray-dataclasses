@@ -30,6 +30,7 @@ from .dataoptions import DataOptions
 from .typing import AnyArray, AnyXarray, DataClass, Order, Shape, Sizes
 from .util import lazy_import
 
+
 # lazy imports of large modules
 if TYPE_CHECKING:
     import numpy as np
@@ -38,13 +39,10 @@ else:
     np = lazy_import("numpy")
     xr = lazy_import("xarray")
 
+
 # private type hints
 PInit = ParamSpec("PInit")
-
-if TYPE_CHECKING:
-    TDataArray = TypeVar("TDataArray", bound=xr.DataArray)
-else:
-    TDataArray = TypeVar("TDataArray", bound="xr.DataArray")
+TDataArray = TypeVar("TDataArray", bound="xr.DataArray")
 
 
 class OptionedClass(DataClass[PInit], Protocol[PInit, TDataArray]):
