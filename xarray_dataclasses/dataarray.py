@@ -166,23 +166,24 @@ class AsDataArray:
         setattr(new, "__signature__", sig)
         return MethodType(new, cls)
 
-    @overload
-    @classmethod
-    def shaped(
-        cls: Type[OptionedClass[PInit, TDataArray]],
-        func: Callable[[Shape], AnyArray],
-        shape: Union[Shape, Sizes],
-        **kwargs: Any,
-    ) -> TDataArray: ...
+    if TYPE_CHECKING:
+        @overload
+        @classmethod
+        def shaped(
+            cls: Type[OptionedClass[PInit, TDataArray]],
+            func: Callable[[Shape], AnyArray],
+            shape: Union[Shape, Sizes],
+            **kwargs: Any,
+        ) -> TDataArray: ...
 
-    @overload
-    @classmethod
-    def shaped(
-        cls: Type[DataClass[PInit]],
-        func: Callable[[Shape], AnyArray],
-        shape: Union[Shape, Sizes],
-        **kwargs: Any,
-    ) -> xr.DataArray: ...
+        @overload
+        @classmethod
+        def shaped(
+            cls: Type[DataClass[PInit]],
+            func: Callable[[Shape], AnyArray],
+            shape: Union[Shape, Sizes],
+            **kwargs: Any,
+        ) -> xr.DataArray: ...
 
     @classmethod
     def shaped(
