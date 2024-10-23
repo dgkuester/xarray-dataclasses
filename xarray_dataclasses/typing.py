@@ -59,8 +59,8 @@ if TYPE_CHECKING:
     import numpy as np
     import xarray as xr
 else:
-    np = lazy_import('numpy')
-    xr = lazy_import('xarray')
+    np = lazy_import("numpy")
+    xr = lazy_import("xarray")
 
 # type hints (private)
 PInit = ParamSpec("PInit")

@@ -2,6 +2,7 @@ import importlib
 import importlib.util
 import sys
 
+
 def lazy_import(module_name: str):
     """postponed import of the module with the specified name.
 
