@@ -7,7 +7,17 @@ __all__ = ["AsDataArray", "asdataarray"]
 from functools import partial
 from inspect import signature
 from types import MethodType
-from typing import Any, Callable, Optional, Protocol, TYPE_CHECKING, Type, TypeVar, Union, overload
+from typing import (
+    Any,
+    Callable,
+    Optional,
+    Protocol,
+    TYPE_CHECKING,
+    Type,
+    TypeVar,
+    Union,
+    overload,
+)
 
 
 # dependencies
@@ -25,8 +35,8 @@ if TYPE_CHECKING:
     import numpy as np
     import xarray as xr
 else:
-    np = lazy_import('numpy')
-    xr = lazy_import('xarray')
+    np = lazy_import("numpy")
+    xr = lazy_import("xarray")
 
 # private type hints
 PInit = ParamSpec("PInit")
@@ -34,7 +44,7 @@ PInit = ParamSpec("PInit")
 if TYPE_CHECKING:
     TDataArray = TypeVar("TDataArray", bound=xr.DataArray)
 else:
-    TDataArray = TypeVar("TDataArray", bound='xr.DataArray')
+    TDataArray = TypeVar("TDataArray", bound="xr.DataArray")
 
 
 class OptionedClass(DataClass[PInit], Protocol[PInit, TDataArray]):
@@ -52,14 +62,12 @@ if TYPE_CHECKING:
         dataoptions: None = None,
     ) -> xr.DataArray: ...
 
-
     @overload
     def asdataarray(
         dataclass: DataClass[PInit],
         reference: Optional[AnyXarray] = None,
         dataoptions: None = None,
     ) -> xr.DataArray: ...
-
 
     @overload
     def asdataarray(
@@ -124,6 +132,7 @@ class classproperty:
         self.__func__ = func
 
     if TYPE_CHECKING:
+
         @overload
         def __get__(
             self,
@@ -204,6 +213,7 @@ class AsDataArray:
         return asdataarray(cls(**{key: func(shape)}, **kwargs))
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def empty(
@@ -245,6 +255,7 @@ class AsDataArray:
         return cls.shaped(func, shape, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def zeros(
@@ -286,6 +297,7 @@ class AsDataArray:
         return cls.shaped(func, shape, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def ones(
@@ -327,6 +339,7 @@ class AsDataArray:
         return cls.shaped(func, shape, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def full(

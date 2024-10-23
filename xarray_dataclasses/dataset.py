@@ -7,7 +7,17 @@ __all__ = ["AsDataset", "asdataset"]
 from functools import partial
 from inspect import signature
 from types import MethodType
-from typing import Any, Callable, Dict, Optional, Protocol, Type, TYPE_CHECKING, TypeVar, overload
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Optional,
+    Protocol,
+    Type,
+    TYPE_CHECKING,
+    TypeVar,
+    overload,
+)
 
 
 # dependencies
@@ -25,13 +35,13 @@ if TYPE_CHECKING:
     import numpy as np
     import xarray as xr
 else:
-    numpy = lazy_import('xarray')
-    xr = lazy_import('xarray')
+    numpy = lazy_import("xarray")
+    xr = lazy_import("xarray")
 
 
 # type hints
 PInit = ParamSpec("PInit")
-TDataset = TypeVar("TDataset", bound='xr.Dataset')
+TDataset = TypeVar("TDataset", bound="xr.Dataset")
 
 
 class OptionedClass(DataClass[PInit], Protocol[PInit, TDataset]):
@@ -42,6 +52,7 @@ class OptionedClass(DataClass[PInit], Protocol[PInit, TDataset]):
 
 # runtime functions and classes
 if TYPE_CHECKING:
+
     @overload
     def asdataset(
         dataclass: OptionedClass[PInit, TDataset],
@@ -49,14 +60,12 @@ if TYPE_CHECKING:
         dataoptions: None = None,
     ) -> TDataset: ...
 
-
     @overload
     def asdataset(
         dataclass: DataClass[PInit],
         reference: Optional[AnyXarray] = None,
         dataoptions: None = None,
     ) -> xr.Dataset: ...
-
 
     @overload
     def asdataset(
@@ -121,6 +130,7 @@ class classproperty:
         self.__func__ = func
 
     if TYPE_CHECKING:
+
         @overload
         def __get__(
             self,
@@ -157,6 +167,7 @@ class AsDataset:
         return MethodType(new, cls)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def shaped(
@@ -203,6 +214,7 @@ class AsDataset:
         return asdataset(cls(**data_vars, **kwargs))
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def empty(
@@ -244,6 +256,7 @@ class AsDataset:
         return cls.shaped(func, sizes, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def zeros(
@@ -285,6 +298,7 @@ class AsDataset:
         return cls.shaped(func, sizes, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def ones(
@@ -326,6 +340,7 @@ class AsDataset:
         return cls.shaped(func, sizes, **kwargs)
 
     if TYPE_CHECKING:
+
         @overload
         @classmethod
         def full(
