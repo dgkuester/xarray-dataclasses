@@ -17,7 +17,6 @@ Note:
 
 __all__ = ["Attr", "Coord", "Coordof", "Data", "Dataof", "Name"]
 
-
 # standard library
 from dataclasses import Field, is_dataclass
 from enum import Enum
@@ -35,6 +34,7 @@ from typing import (
     Protocol,
     Sequence,
     Tuple,
+    TYPE_CHECKING,
     Type,
     TypeVar,
     Union,
@@ -42,8 +42,6 @@ from typing import (
 
 
 # dependencies
-import numpy as np
-import xarray as xr
 from typing_extensions import (
     Annotated,
     ParamSpec,
@@ -53,6 +51,16 @@ from typing_extensions import (
     get_type_hints,
 )
 
+# submodules
+from .util import lazy_import
+
+# lazy imports of large modules
+if TYPE_CHECKING:
+    import numpy as np
+    import xarray as xr
+else:
+    numpy = lazy_import('xarray')
+    xr = lazy_import('xarray')
 
 # type hints (private)
 PInit = ParamSpec("PInit")

@@ -13,15 +13,15 @@ from typing import (
     Literal,
     Optional,
     Tuple,
+    TYPE_CHECKING,
     Type,
+    TypeVar,
     Union,
     cast,
 )
 
 
 # dependencies
-import numpy as np
-import xarray as xr
 from typing_extensions import ParamSpec, get_type_hints
 
 
@@ -40,7 +40,15 @@ from .typing import (
     get_name,
     get_role,
 )
+from .util import lazy_import
 
+# lazy imports of large modules
+if TYPE_CHECKING:
+    import numpy as np
+    import xarray as xr
+else:
+    numpy = lazy_import('xarray')
+    xr = lazy_import('xarray')
 
 # type hints
 PInit = ParamSpec("PInit")
@@ -133,7 +141,8 @@ class DataEntry:
         if model.names:
             setattr(self, "name", model.names[0].value)
 
-    def __call__(self, reference: Optional[AnyXarray] = None) -> xr.DataArray:
+
+    def __call__(self, reference: Optional[AnyXarray] = None) -> 'xr.DataArray':
         """Create a DataArray object according to the entry."""
         from .dataarray import asdataarray
 
@@ -255,7 +264,7 @@ def get_typedarray(
     dims: Dims,
     dtype: Optional[AnyDType],
     reference: Optional[AnyXarray] = None,
-) -> xr.DataArray:
+) -> 'xr.DataArray':
     """Create a DataArray object with given dims and dtype.
 
     Args:
