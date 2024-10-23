@@ -59,7 +59,7 @@ if TYPE_CHECKING:
     import numpy as np
     import xarray as xr
 else:
-    numpy = lazy_import('xarray')
+    np = lazy_import('numpy')
     xr = lazy_import('xarray')
 
 # type hints (private)
