@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     import numpy as np
     import xarray as xr
 else:
-    np = lazy_import('xarray')
+    np = lazy_import('numpy')
     xr = lazy_import('xarray')
 
 # private type hints
@@ -175,7 +175,7 @@ class AsDataArray:
         func: Callable[[Shape], AnyArray],
         shape: Union[Shape, Sizes],
         **kwargs: Any,
-    ) -> TDataArray: ...
+    ) -> xr.DataArray: ...
 
     @classmethod
     def shaped(
