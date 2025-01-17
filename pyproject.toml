@@ -1,3 +1,7 @@
+[project]
+name = "xarray-dataclasses"
+version = "1.9.1"
+
 [tool.poetry]
 name = "xarray-dataclasses"
 version = "1.9.1"
